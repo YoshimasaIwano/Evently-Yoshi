@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Include flatpickr library -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <title>Evently - Date Selection</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="heading">Evently</h1>
+        <hr class="divider">
+        <h2 class="subheading">When do you want to go?</h2>
+        <div class="date-selection">
+            <div class="date-picker">
+                <label for="start-date">Start Date:</label>
+                <input type="text" id="start-date" readonly>
+            </div>
+            <div class="date-picker">
+                <label for="end-date">End Date:</label>
+                <input type="text" id="end-date" readonly>
+            </div>
+        </div>
+        <div class="button-container">
+            <button class="previous-button" onclick="goBack()">Previous</button>
+            <button class="next-button" onclick="goNext()">Next</button>
+        </div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const today = new Date();
+                const maxDateDefault = new Date();
+                maxDateDefault.setMonth(maxDateDefault.getMonth() + 6); // 6 months from today
+
+                let startDatePicker;
+                let endDatePicker;
+
+                startDatePicker = flatpickr("#start-date", {
+                    dateFormat: "Y-m-d",
+                    minDate: "today",
+                    maxDate: maxDateDefault,
+                    onClose: function (selectedDates, dateStr, instance) {
+                        const startDate = dateStr;
+                        const endDate = endDatePicker.input.value;
+                        if (startDate && endDate) {
+                            // Handle the selected date range
+                            console.log("Start Date:", startDate);
+                            console.log("End Date:", endDate);
+                        } else {
+                            // Handle a single date
+                            console.log("Selected Date:", dateStr);
+                        }
+
+                        // Calculate the maxDate for the End Date picker
+                        const maxEndDate = new Date(startDate);
+                        maxEndDate.setDate(maxEndDate.getDate() + 14); // 14 days from start date
+                        endDatePicker.set("maxDate", maxEndDate);
+
+                        // Update the minDate for the End Date picker
+                        endDatePicker.set("minDate", dateStr);
+                    },
+                });
+
+                endDatePicker = flatpickr("#end-date", {
+                    dateFormat: "Y-m-d",
+                    minDate: startDatePicker.selectedDates.length > 0 ? startDatePicker.selectedDates[0] : "today",
+                    maxDate: today, // Default to 6 months from today
+                    onClose: function (selectedDates, dateStr, instance) {
+                        const endDate = dateStr;
+                        const startDate = startDatePicker.input.value;
+                        if (startDate && endDate) {
+                            // Handle the selected date range
+                            console.log("Start Date:", startDate);
+                            console.log("End Date:", endDate);
+                        }
+                    },
+                });
+            });
+
+            function goBack() {
+                window.location.href = "index.html"
+            }
+
+            function goNext() {
+                const currentURL = window.location.href;
+                const urlParams = new URLSearchParams(window.location.search);
+                const interest = urlParams.get('param1');
+                window.location.href = "location.html?" + interest;
+            }
+        </script>
+</body>
+
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <h2 class="header">Results</h2>
+        <hr class="divider">
+        <div class="result-item" data-id="1" onclick="showDetails(1)">
+            <h2 class="item-title">Title 1</h2>
+            <div class="item-details">
+                <div class="item-date">Date 1</div>
+                <div class="item-location">Location 1</div>
+            </div>
+        </div>
+        <div class="result-item" data-id="2" onclick="showDetails(2)">
+            <h2 class="item-title">Title 2</h2>
+            <div class="item-details">
+                <div class="item-date">Date 2</div>
+                <div class="item-location">Location 2</div>
+            </div>
+        </div>
+        <div class="result-item" data-id="3" onclick="showDetails(3)">
+            <h2 class="item-title">Title 3</h2>
+            <div class="item-details">
+                <div class="item-date">Date 3</div>
+                <div class="item-location">Location 3</div>
+            </div>
+        </div>
+        <div class="result-item" data-id="4" onclick="showDetails(4)">
+            <h2 class="item-title">Title 4</h2>
+            <div class="item-details">
+                <div class="item-date">Date 4</div>
+                <div class="item-location">Location 4</div>
+            </div>
+        </div>
+    </div>
+    <div class="overlay" id="overlay">
+        <div class="overlay-content">
+            <span class="close" onclick="closeOverlay()">&times;</span>
+            <h2 class="overlay-title">Details</h2>
+            <p class="item-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <h2 class="overlay-details">Title: <span id="title"></span></h2>
+            <h2 class="overlay-details">Date: <span id="date"></span></h2>
+            <h2 class="overlay-details">Location: <span id="location"></span></h2>
+        </div>
+    </div>
+
+    <script src="results.js"></script>
+</body>
+
+</html>

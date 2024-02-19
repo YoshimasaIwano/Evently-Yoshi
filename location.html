@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="header">Home</h1>
+        <hr class="divider">
+        <h2 class="subheading">Where do you want to go?</h2>
+        <div class="location-input">
+            <input id="location-input" type="text" placeholder="Enter a city or place">
+        </div>
+        <div class="button-container">
+            <a class="previous-button" href="date.html">Previous</a>
+            <a class="next-button" onclick="showOverlay()">Next</a>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay">
+        <div class="overlay-content">
+            <span class="close" onclick="closeOverlay()">&times;</span>
+            <h2 class="overlay-heading">Login or Register</h2>
+            <button class="overlay-login-button" onclick="goResults()">Login</button>
+            <button class="overlay-register-button">Register</button>
+            <button class="overlay-google-button">Continue with Google</button>
+        </div>
+    </div>
+
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUh1wtgKt5YgqzZ4eC7Ze8ympFNlxYfLo&libraries=places&v=3&language=en&region=US"></script>
+    <script>
+        function showOverlay() {
+            var overlay = document.getElementById("overlay");
+            overlay.style.display = "flex";
+        }
+
+        function closeOverlay() {
+            var overlay = document.getElementById("overlay");
+            overlay.style.display = "none";
+        }
+
+        function goResults() {
+            window.location.href = "results.html";
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const locationInput = document.getElementById("location-input");
+            const options = {
+                types: ['(cities)'], // Restrict the results to cities
+            };
+
+            const autocomplete = new google.maps.places.Autocomplete(locationInput, options);
+
+            // Set the fields to be returned in the suggestions
+            autocomplete.setFields(['formatted_address']);
+
+            autocomplete.addListener("place_changed", function () {
+                const place = autocomplete.getPlace();
+
+                if (place && place.formatted_address) {
+                    const location = place.formatted_address;
+                    console.log("Selected Location:", location);
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
